@@ -30,8 +30,7 @@ Modal.setAppElement(document.getElementById("root"));
 
 const TodoItem = ({ todo }) => {
   let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [setIsLoading] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -50,44 +49,22 @@ const TodoItem = ({ todo }) => {
 
   let id = todo._id;
   const updateTodo = () => {
-    setIsLoading(true);
     let todo = {
       name,
       age: 3,
       colour: "red",
     };
-    axios
-      .put("unicorns/" + id, todo)
-      .then(() => {
-        alert(todo.name + " " + "are updated.");
-        setIsLoading(false);
-        window.location.reload(false);
-      })
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          setIsLoading(false);
-          console.log("fetch aborted.");
-        }
-      })
-      .finally(() => setIsLoading(false));
+    axios.put("unicorns/" + id, todo).then(() => {
+      alert(todo.name + " " + "are updated.");
+      window.location.reload(false);
+    });
   };
 
   const deleteTodo = () => {
-    setIsLoading(true);
-    axios
-      .delete("unicorns/" + id)
-      .then(() => {
-        alert(todo.name + " " + "are deleted.");
-        setIsLoading(false);
-        window.location.reload(false);
-      })
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          setIsLoading(false);
-          console.log("fetch aborted.");
-        }
-      })
-      .finally(() => setIsLoading(false));
+    axios.delete("unicorns/" + id).then(() => {
+      alert(todo.name + " " + "are deleted.");
+      window.location.reload(false);
+    });
   };
 
   return (
