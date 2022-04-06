@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "../api";
 
-const Header = ({ setRefresh }) => {
+const Header = () => {
   const [name, setTitle] = useState("");
   const addTodo = () => {
     const newTodo = {
@@ -24,10 +24,12 @@ const Header = ({ setRefresh }) => {
         type="text"
         value={name}
         onChange={(e) => setTitle(e.target.value)}
-      />
-      <span className="add-button" onClick={addTodo}>
-        Add
-      </span>
+      />{" "}
+      {name && (
+        <span className="add-button" onClick={addTodo}>
+          Add
+        </span>
+      )}
     </div>
   );
 };
