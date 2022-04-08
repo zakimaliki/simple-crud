@@ -48,7 +48,8 @@ const TodoItem = ({ todo, setRefresh }) => {
 
   let id = todo._id;
 
-  const updateTodo = () => {
+  const updateTodo = (event) => {
+    event.preventDefault();
     let todo = {
       name,
       age: 3,
@@ -56,7 +57,7 @@ const TodoItem = ({ todo, setRefresh }) => {
     };
     setIsLoading(true);
     fetch(
-      "https://crudcrud.com/api/0273646a66ea4836b05b90b638c034fc/unicorns/" +
+      "https://crudcrud.com/api/4ffb348c1d734649848b5236da073a62/unicorns/" +
         id,
       {
         method: "PUT",
@@ -84,7 +85,7 @@ const TodoItem = ({ todo, setRefresh }) => {
   const deleteTodo = () => {
     setIsLoading(true);
     fetch(
-      "https://crudcrud.com/api/0273646a66ea4836b05b90b638c034fc/unicorns/" +
+      "https://crudcrud.com/api/4ffb348c1d734649848b5236da073a62/unicorns/" +
         id,
       {
         method: "DELETE",
@@ -105,6 +106,15 @@ const TodoItem = ({ todo, setRefresh }) => {
       .finally(() => setIsLoading(false));
   };
 
+  const handleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    setTitle("");
+    event.preventDefault();
+  };
+
   return (
     <div>
       {isLoading ? <LoadingSpinner /> : ""}
@@ -118,13 +128,9 @@ const TodoItem = ({ todo, setRefresh }) => {
         >
           <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Update Data</h2>
           <button onClick={closeModal}>x</button>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setTitle(e.target.value)}
-              />
+              <input type="text" value={name} onChange={handleChange} />
               {name && (
                 <span className="add-button" onClick={updateTodo}>
                   Update
