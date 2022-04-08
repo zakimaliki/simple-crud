@@ -37,19 +37,21 @@ const Header = ({ setRefresh }) => {
       .finally(() => setIsLoading(false));
   };
   return (
-    <div id="todo-header" className="header">
+    <div>
       {isLoading ? <LoadingSpinner /> : ""}
-      <h2>Simple Todo App</h2>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      {name && (
-        <span className="add-button" onClick={addTodo}>
-          Add
-        </span>
-      )}
+      <div id="todo-header" className="header">
+        <h2>Simple Todo App</h2>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        {name && (
+          <span className="add-button" onClick={addTodo}>
+            Add
+          </span>
+        )}
+      </div>
     </div>
   );
 };
