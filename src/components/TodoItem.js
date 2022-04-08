@@ -1,4 +1,3 @@
-import axios from "../api";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -25,10 +24,9 @@ const customStyles = {
   },
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement(document.getElementById("root"));
 
-const TodoItem = ({ todo }) => {
+const TodoItem = ({ todo, setRefresh }) => {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -37,7 +35,6 @@ const TodoItem = ({ todo }) => {
   }
 
   function afterOpenModal() {
-    // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
 
@@ -54,16 +51,32 @@ const TodoItem = ({ todo }) => {
       age: 3,
       colour: "red",
     };
-    axios.put("unicorns/" + id, todo).then(() => {
-      alert(todo.name + " " + "are updated.");
-      window.location.reload(false);
+    fetch(
+      "https://crudcrud.com/api/0273646a66ea4836b05b90b638c034fc/unicorns/" +
+        id,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(todo),
+      }
+    ).then(() => {
+      console.log("todo updated.");
+      setRefresh(true);
     });
   };
 
   const deleteTodo = () => {
-    axios.delete("unicorns/" + id).then(() => {
-      alert(todo.name + " " + "are deleted.");
-      window.location.reload(false);
+    fetch(
+      "https://crudcrud.com/api/0273646a66ea4836b05b90b638c034fc/unicorns/" +
+        id,
+      {
+        method: "DELETE",
+      }
+    ).then(() => {
+      console.log("todo deleted.");
+      setRefresh(true);
     });
   };
 

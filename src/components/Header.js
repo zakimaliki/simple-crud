@@ -1,7 +1,6 @@
 import { useState } from "react";
-import axios from "../api";
 
-const Header = () => {
+const Header = ({ setRefresh }) => {
   const [name, setTitle] = useState("");
   const addTodo = () => {
     const newTodo = {
@@ -9,14 +8,20 @@ const Header = () => {
       age: 2,
       colour: "blue",
     };
-
-    axios.post("unicorns", newTodo).then((res) => {
+    fetch(
+      "https://crudcrud.com/api/0273646a66ea4836b05b90b638c034fc/unicorns",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTodo),
+      }
+    ).then(() => {
       setTitle("");
-      alert("A new data is added");
-      window.location.reload(false);
+      setRefresh(true);
     });
   };
-
   return (
     <div id="todo-header" className="header">
       <h2>Simple Todo App</h2>

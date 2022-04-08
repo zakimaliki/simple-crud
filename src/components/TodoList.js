@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import TodoItem from "./TodoItem";
 import LoadingSpinner from "./spinner";
-import axios from "../api";
 
 const TodoList = ({ isRefresh, setRefresh }) => {
   const [todos, setTodos] = useState([]);
@@ -10,10 +9,14 @@ const TodoList = ({ isRefresh, setRefresh }) => {
   useEffect(() => {
     if (isRefresh) {
       setIsLoading(true);
-      axios
-        .get("unicorns")
+      fetch(
+        "https://crudcrud.com/api/0273646a66ea4836b05b90b638c034fc/unicorns"
+      )
         .then((res) => {
-          const data = res.data;
+          return res.json();
+        })
+        .then((data) => {
+          setRefresh(false);
           setTodos(data);
           setIsLoading(false);
         })
@@ -27,6 +30,7 @@ const TodoList = ({ isRefresh, setRefresh }) => {
         .finally(() => setIsLoading(false));
     }
   }, [isRefresh, setRefresh]);
+
   return (
     <ul id="todo-list">
       {isLoading ? (
